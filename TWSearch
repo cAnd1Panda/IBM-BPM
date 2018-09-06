@@ -1,0 +1,36 @@
+// Создаём объект поиска 
+var search = new TWSearch();    
+    search.organizedBy=TWSearch.OrganizeByTypes.ProcessInstance;        // поиск по экземплярам процессров
+    
+// Задаём условие поиска по переменной бизнес-данных
+var condition1            = new TWSearchCondition();     
+    condition1.column     = new TWSearchColumn();
+        condition1.column.type = TWSearchColumn.Types.BusinessData;
+        condition1.column.name = tw.local.BusinessDataVariableName;
+    condition1.operator   = TWSearchCondition.Operations.Equals;
+    condition1.value      = tw.local.BusinessDataVariableValueAsStr;
+// Задаём условие поиска по имени процесса
+var condition2            = new TWSearchCondition();     
+    condition2.column     = new TWSearchColumn();
+        condition2.column.type = TWSearchColumn.Types.Process;
+        condition2.column.name = TWSearchColumn.ProcessColumns.Name;
+    condition2.operator   = TWSearchCondition.Operations.Equals;
+    condition2.value      = tw.local.ProcessName;     
+// Задаём условие поиска по статусу процесса
+var condition3            = new TWSearchCondition();     
+    condition3.column     = new TWSearchColumn();
+        condition3.column.type = TWSearchColumn.Types.ProcessInstance;
+        condition3.column.name = TWSearchColumn.ProcessInstanceColumns.Status;
+    condition3.operator   = TWSearchCondition.Operations.Equals;
+    condition3.value      = tw.local.ProcessStatus;
+
+search.conditions = new Array(condition1, condition2, condition3);
+
+// Выполняем поиск
+var results = search.executeForProcessInstances();    
+
+// Берём первый найденный результат
+if ((results.length)>=1)
+    tw.local.ProcessID = tw.system.convertIDToDB(results[0].id)
+else
+    tw.local.ProcessID='';
