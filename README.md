@@ -1,2 +1,2 @@
 # IBM-BPM
-some features
+some features for IBM Process Designer
