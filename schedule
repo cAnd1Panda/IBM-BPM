@@ -1,0 +1,9 @@
+tw.local.workSchedule = new tw.object.TWWorkSchedule();
+tw.local.workSchedule.timeZone = "Europe/Moscow";//your timezone
+tw.local.workSchedule.timeSchedule = new tw.object.TWTimeSchedule();
+tw.local.workSchedule.timeSchedule = tw.system.findTimeScheduleByName('КЗОТ');// name of schedule
+tw.local.workSchedule.timeSchedule.excludeHolidays = true;
+tw.local.workSchedule.holidaySchedule = new tw.object.toolkit.TWSYS.TWHolidaySchedule();
+tw.local.workSchedule.holidaySchedule.dates = new tw.object.listOf.toolkit.TWSYS.Date();
+tw.local.workSchedule.holidaySchedule.dates = tw.system.findHolidayScheduleByName('График праздников РФ');// name of holiday schedule
+tw.local.newWorkingDate = tw.system.calculateBusinessDate(tw.local.originDate, tw.local.amoutOfDays, tw.local.calculationType, tw.local.workSchedule);
